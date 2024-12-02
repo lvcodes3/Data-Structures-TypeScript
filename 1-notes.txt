@@ -1,0 +1,70 @@
+What is an ADT?
+
+    An abstraction of concrete data structures (ds). It's the interface, and contract that ds must adhere to.
+
+    The interface hides the details and complexity of the ds implementation.
+
+
+Examples: 
+
+    ADT (Interface)                         DS (Implementation)
+    List                                    Dynamic Array, Linked List
+    Queue / Stack                           Dynamic Array, Linked List
+    Map                                     Hash Map, Tree Map
+
+
+Arrays:
+
+    1. Static arrays: hold a fixed length of elements.
+
+        Stored in RAM memory, keeps track of the first block memory address and we know it's consecutively
+        stored from there.
+
+    2. Dynamic arrays: hold a dynamic length of elements.
+
+    Useful for making lists of items, or storing related data.
+
+    Insertion (constant time complexity):
+        
+        push(value)         -       insertion to end of array
+        
+        arr[i] = value      -       direct insertion in specified index
+        
+        unshift(value)      -       insertion to front of array
+
+    Time Complexity:
+
+        Operation               Cost
+        Read                    O(1)
+        Write                   O(1)
+        Update                  O(1)
+        Delete                  O(n) shifting elements to the right or left, then changing the size of the array
+        Search                  O(n) looping through n elements to find an element
+
+
+Linked Lists:
+
+    A linear data structure where the elements are not stored in contiguous memory locations, instead the elements
+    are linked using pointers.
+
+    It contains a head and optionally a tail. The pointer points to the next node in the Singly Linked List (SLL).
+
+    Usage:
+
+        Spotify Music Playlist
+
+        Stacks
+
+        Queues
+
+    Doubly Linked Lists (DLL) have pointers to its next and previous node.
+
+    Time Complexity:
+
+        Operation           SLL         DLL
+        Insertion head      O(1)        O(1)
+        Insertion middle    O(n)        O(n)
+        Insertion tail      O(1)        O(1)
+
+
+Stacks:
