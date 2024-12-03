@@ -68,3 +68,61 @@ Linked Lists:
 
 
 Stacks:
+
+    A stack is a linear data structure.
+
+    Unlike the array and linked list, a stock only supports insertion and deletion from the top of the stack.
+
+    LIFO ordering (Last In, First Out).
+
+    Pushing data in & Popping data out.
+
+    Usage:
+
+        Browser history (back, next).
+
+        Call stack in JS runtime / event loop.
+
+        Graph algorithms - DFS & BFS.
+
+    Implementation:
+
+        Using a Doubly Linked List, pop from tail (top of the stack), push to tail.
+
+    Time Complexity:
+
+        Operation           Stack
+        Push                O(1)
+        Pop                 O(1)
+        Peek                O(1)
+
+
+Queues:
+
+    A queue is a linear data structure.
+
+    Unlike the array and linked list, a queue only supports insertion and deletion from the ends of the list.
+
+    Similar to waiting in line to pay at a store.
+
+    We delete from the front of the queue (dequeue) and we add to the back of the queue (enqueue).
+
+    FIFI ordering (First In, First Out).
+
+    Usage:
+
+        Output Streams (transferring data).
+
+        Graph algorithms - DFS & BFS.
+
+    Implementation:
+
+        Using a Doubly Linked List, pop from head (front of the queue), push to tail (back of the queue).
+
+    Time Complexity:
+
+        Operation           Stack
+        Enqueue             O(1)
+        Dequeue             O(1)
+        Peek Front          O(1)
+        Peek Back           O(1)
