@@ -126,3 +126,34 @@ Queues:
         Dequeue             O(1)
         Peek Front          O(1)
         Peek Back           O(1)
+
+
+Circular Buffer:
+
+    A circular buffer is a single, fixed-size buffer which is connected from end-to-end.
+
+    Other names for this ADT are: circular queue, cyclic buffer, and ring buffer.
+
+    FIFO ordering (First In, First Out), similar to a queue, but it has a fixed capacity.
+
+    Circular buffers can also be implemented with overwriting enabled.
+
+    Frequently used when the input and output to a data stream occur at different rates.
+
+    Implementation:
+
+        Two Indexes:
+        
+            readIndex - the element where we should pull the element from (front of the queue)
+
+            writeIndex - the element where we should add the new element (back of the queue)
+
+        Since the size is fixed, the writeIndex & readIndex goes back to index 0 after the last element index is reached.
+
+    Time Complexity:
+
+        Operation           Stack
+        Enqueue             O(1)
+        Dequeue             O(1)
+        Peek Front          O(1)
+        Peek Back           O(1)
