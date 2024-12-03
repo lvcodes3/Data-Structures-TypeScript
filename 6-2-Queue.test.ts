@@ -1,4 +1,4 @@
-import Queue from "./6-Queue";
+import Queue from "./6-1-Queue";
 
 const queue = new Queue<string | number>();
 

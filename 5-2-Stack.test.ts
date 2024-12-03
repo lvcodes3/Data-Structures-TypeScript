@@ -1,4 +1,4 @@
-import Stack from "./5-Stack";
+import Stack from "./5-1-Stack";
 
 const stack = new Stack<string>();
 
