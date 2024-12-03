@@ -1,10 +1,9 @@
 /**
- * Represents a node in a Doubly Linked List (DLL).
+ * Represents a node in a Singly Linked List (SLL).
  */
-class DoublyLinkedListNode<T> {
+class SinglyLinkedListNode<T> {
   public data: T;
-  public next: DoublyLinkedListNode<T> | null = null;
-  public prev: DoublyLinkedListNode<T> | null = null;
+  public next: SinglyLinkedListNode<T> | null = null;
 
   constructor(data: T) {
     this.data = data;
@@ -12,19 +11,18 @@ class DoublyLinkedListNode<T> {
 }
 
 /**
- * Represents the internal structure of a Doubly Linked List (DLL).
+ * Represents the internal structure of a Singly Linked List (SLL).
  */
-interface DoublyLinkedListInterface<T> {
-  head: DoublyLinkedListNode<T>;
-  tail: DoublyLinkedListNode<T>;
+interface SinglyLinkedListInterface<T> {
+  head: SinglyLinkedListNode<T>;
   size: number;
 }
 
 /**
- * A Doubly Linked List (DLL) implementation with common operations.
+ * A Singly Linked List (SLL) implementation with common operations.
  */
-class DoublyLinkedList<T> {
-  private dll: DoublyLinkedListInterface<T> | undefined = undefined;
+class SinglyLinkedList<T> {
+  private sll: SinglyLinkedListInterface<T> | undefined = undefined;
 
   ////////////////////////////
   // PRIVATE FUNCTIONALITES //
@@ -46,16 +44,16 @@ class DoublyLinkedList<T> {
   }
 
   /**
-   * Ensures the DLL is defined, or throws an error.
-   * @throws If the DLL is undefined.
-   * @returns The DLL interface.
+   * Ensures the SLL is defined, or throws an error.
+   * @throws If the SLL is undefined.
+   * @returns The SLL interface.
    * @timecomplexity O(1).
    */
-  private _ensureDLL(): DoublyLinkedListInterface<T> {
-    if (!this.dll) {
-      throw new Error("Doubly Linked List is undefined.");
+  private _ensureSLL(): SinglyLinkedListInterface<T> {
+    if (!this.sll) {
+      throw new Error("Singly Linked List is undefined.");
     }
-    return this.dll;
+    return this.sll;
   }
 
   //////////////////////
@@ -63,36 +61,36 @@ class DoublyLinkedList<T> {
   //////////////////////
 
   /**
-   * Returns the size of the DLL.
-   * @returns The number of elements in the DLL.
+   * Returns the size of the SLL.
+   * @returns The number of elements in the SLL.
    * @timecomplexity O(1).
    */
   size(): number {
-    return this.dll ? this.dll.size : 0;
+    return this.sll ? this.sll.size : 0;
   }
 
   /**
-   * Checks if the DLL is empty.
-   * @returns `true` if the DLL is empty, otherwise `false`.
+   * Checks if the SLL is empty.
+   * @returns `true` if the SLL is empty, otherwise `false`.
    * @timecomplexity O(1).
    */
   isEmpty(): boolean {
-    return !this.dll;
+    return !this.sll;
   }
 
   /**
-   * Displays the list in a formatted string.
+   * Displays the SLL in a formatted string.
    * @returns void.
    * @timecomplexity O(N).
    */
   display(): void {
-    let output = "null ";
+    let output = "";
 
-    let currNode = this.dll?.head ?? null;
+    let currNode = this.sll?.head ?? null;
 
     while (currNode) {
-      output += `${currNode.data} `;
-      currNode = currNode.next!;
+      output += `${currNode.data} -> `;
+      currNode = currNode.next;
     }
 
     output += "null";
@@ -105,46 +103,48 @@ class DoublyLinkedList<T> {
   ///////////////
 
   /**
-   * Adds an element to the front of the DLL.
+   * Adds an element to the front of the SLL.
    * @param data - The data to add.
    * @returns void.
    * @timecomplexity O(1).
    */
   addFront(data: T): void {
-    const newNode = new DoublyLinkedListNode(data);
+    const newNode = new SinglyLinkedListNode(data);
 
-    if (this.dll) {
-      newNode.next = this.dll.head;
-      this.dll.head.prev = newNode;
-      this.dll.head = newNode;
-      this.dll.size++;
+    if (this.sll) {
+      newNode.next = this.sll.head;
+      this.sll.head = newNode;
+      this.sll.size++;
     } else {
-      this.dll = {
+      this.sll = {
         head: newNode,
-        tail: newNode,
         size: 1,
       };
     }
   }
 
   /**
-   * Adds an element to the back of the DLL.
+   * Adds an element to the back of the SLL.
    * @param data - The data to add.
    * @returns void.
-   * @timecomplexity - O(1).
+   * @timecomplexity - O(N).
    */
   addBack(data: T): void {
-    const newNode = new DoublyLinkedListNode(data);
+    const newNode = new SinglyLinkedListNode(data);
 
-    if (this.dll) {
-      newNode.prev = this.dll.tail;
-      this.dll.tail.next = newNode;
-      this.dll.tail = newNode;
-      this.dll.size++;
+    if (this.sll) {
+      let currNode = this.sll.head;
+
+      while (currNode && currNode.next !== null) {
+        currNode = currNode.next!;
+      }
+
+      currNode.next = newNode;
+
+      this.sll.size++;
     } else {
-      this.dll = {
+      this.sll = {
         head: newNode,
-        tail: newNode,
         size: 1,
       };
     }
@@ -154,7 +154,7 @@ class DoublyLinkedList<T> {
    * Adds an element at a specific index.
    * @param index - The index to insert at.
    * @param data  - The data to add.
-   * @throws If the DLL is empty or if the index is out of bounds.
+   * @throws If the SLL is empty or if the index is out of bounds.
    * @returns void.
    * @timecomplexity O(N).
    */
@@ -169,23 +169,21 @@ class DoublyLinkedList<T> {
       return;
     }
 
-    const dll = this._ensureDLL();
+    const sll = this._ensureSLL();
 
     this._validateIndex(index, true);
 
-    let currNode = dll.head;
+    let currNode = sll.head;
 
     // traverse to previous node before index node //
     for (let i = 0; i < index - 1; i++) {
       currNode = currNode.next!;
     }
 
-    const newNode = new DoublyLinkedListNode(data);
-    newNode.prev = currNode;
+    const newNode = new SinglyLinkedListNode(data);
     newNode.next = currNode.next;
     currNode.next = newNode;
-    currNode.next.prev = newNode;
-    dll.size++;
+    sll.size++;
   }
 
   ///////////////
@@ -193,25 +191,32 @@ class DoublyLinkedList<T> {
   ///////////////
 
   /**
-   * Returns the value of the first node in the DLL.
-   * @throws If the DLL is empty.
+   * Returns the value of the first node in the SLL.
+   * @throws If the SLL is empty.
    * @returns value.
    * @timecomplexity O(1).
    */
   peekFront(): T {
-    const dll = this._ensureDLL();
-    return dll.head.data;
+    const sll = this._ensureSLL();
+    return sll.head.data;
   }
 
   /**
-   * Returns the value of the back node in the DLL.
-   * @throws If the DLL is empty.
+   * Returns the value of the last node in the SLL.
+   * @throws If the SLL is empty.
    * @returns value.
-   * @timecomplexity O(1).
+   * @timecomplexity O(N).
    */
   peekBack(): T {
-    const dll = this._ensureDLL();
-    return dll.tail.data;
+    const sll = this._ensureSLL();
+
+    let currNode = this.sll!.head;
+
+    while (currNode && currNode.next !== null) {
+      currNode = currNode.next!;
+    }
+
+    return currNode.data;
   }
 
   ///////////////
@@ -219,30 +224,21 @@ class DoublyLinkedList<T> {
   ///////////////
 
   /**
-   * Retrieves the value at a specific index of a node in the DLL.
+   * Retrieves the value at a specific index of a node in the SLL.
    * @param index - The index to retrieve.
-   * @throws If the DLL is empty or if the index is out of bounds.
+   * @throws If the SLL is empty or if the index is out of bounds.
    * @returns The data at the given index.
    * @timecomplexity O(N).
    */
   get(index: number): T {
-    const dll = this._ensureDLL();
+    const sll = this._ensureSLL();
 
     this._validateIndex(index);
 
-    // optimized search //
-    let currNode: DoublyLinkedListNode<T>;
+    let currNode = sll.head;
 
-    if (index < dll.size / 2) {
-      currNode = dll.head;
-      for (let i = 0; i < index; i++) {
-        currNode = currNode.next!;
-      }
-    } else {
-      currNode = dll.tail;
-      for (let i = dll.size - 1; i > index; i--) {
-        currNode = currNode.prev!;
-      }
+    for (let i = 0; i < index; i++) {
+      currNode = currNode.next!;
     }
 
     return currNode.data;
@@ -251,14 +247,14 @@ class DoublyLinkedList<T> {
   /**
    * Retrieves the index of a specific node's data.
    * @param data - The value we are searching for.
-   * @throws If the DLL is empty.
+   * @throws If the SLL is empty.
    * @returns The index of a specific node's data.
    * @timecomplexity O(N).
    */
   indexOf(data: number): number {
-    const dll = this._ensureDLL();
+    const sll = this._ensureSLL();
 
-    let currNode = dll.head;
+    let currNode = sll.head;
     let index: number = -1;
 
     for (let i = 0; i < this.size(); i++) {
@@ -273,13 +269,13 @@ class DoublyLinkedList<T> {
   }
 
   /**
-   * Checks if the DLL contains a specific element.
+   * Checks if the SLL contains a specific element.
    * @param data - The data to search for.
-   * @returns `true` if the element is in the DLL, otherwise `false`.
+   * @returns `true` if the element is in the SLL, otherwise `false`.
    * @timecomplexity - O(N).
    */
   contains(data: T): boolean {
-    let currNode = this.dll?.head ?? null;
+    let currNode = this.sll?.head ?? null;
 
     while (currNode) {
       if (currNode.data === data) {
@@ -287,6 +283,7 @@ class DoublyLinkedList<T> {
       }
       currNode = currNode.next!;
     }
+
     return false;
   }
 
@@ -295,58 +292,62 @@ class DoublyLinkedList<T> {
   //////////////
 
   /**
-   * Removes the first element of the DLL.
-   * @throws If the DLL is empty.
+   * Removes the first element of the SLL.
+   * @throws If the SLL is empty.
    * @returns The data of the removed element.
    * @timecomplexity O(1).
    */
   removeFront(): T {
-    const dll = this._ensureDLL();
+    const sll = this._ensureSLL();
 
-    const removedValue = dll.head.data;
+    const removedValue = sll.head.data;
 
     if (this.size() === 1) {
-      this.dll = undefined;
+      this.sll = undefined;
     } else {
-      dll.head = dll.head.next!;
-      dll.head.prev = null;
-      dll.size--;
+      sll.head = sll.head.next!;
+      sll.size--;
     }
 
     return removedValue;
   }
 
   /**
-   * Removes the last element of the DLL.
-   * @throws If the DLL is empty.
+   * Removes the last element of the SLL.
+   * @throws If the SLL is empty.
    * @returns The data of the removed element.
-   * @timecomplexity O(1).
+   * @timecomplexity O(N).
    */
   removeBack(): T {
-    const dll = this._ensureDLL();
+    const sll = this._ensureSLL();
 
-    const removedValue = dll.tail.data;
+    let currNode = sll.head;
+
+    while (currNode && currNode.next && currNode.next.next !== null) {
+      currNode = currNode.next;
+    }
+
+    const removedValue = currNode.next!.data;
 
     if (this.size() === 1) {
-      this.dll = undefined;
+      this.sll = undefined;
     } else {
-      dll.tail = dll.tail.prev!;
-      dll.tail.next = null;
-      dll.size--;
+      currNode.next = null;
+      sll.size--;
     }
 
     return removedValue;
   }
 
   /**
-   * Removes the element at the specific index in the DLL.
+   * Removes the element at the specific index in the SLL.
    * @param index - The specific index to be removed.
-   * @throws If the DLL is empty or if the index is out of bounds.
+   * @throws If the SLL is empty or if the index is out of bounds.
    * @returns The data of the removed element.
    * @timecomplexity O(N).
    */
   removeAt(index: number): T {
-    const dll = this._ensureDLL();
+    const sll = this._ensureSLL();
 
     this._validateIndex(index);
 
@@ -358,7 +359,7 @@ class DoublyLinkedList<T> {
       return this.removeBack();
     }
 
-    let currNode = dll.head;
+    let currNode = sll.head;
 
     // traverse to the node before the one we want to remove //
     for (let i = 0; i < index - 1; i++) {
@@ -368,22 +369,19 @@ class DoublyLinkedList<T> {
     const removedValue = currNode.next!.data;
 
     currNode.next = currNode.next!.next;
-    if (currNode.next) {
-      currNode.next.prev = currNode;
-    }
 
-    dll.size--;
+    sll.size--;
 
     return removedValue;
   }
 
   /**
-   * Removes all nodes from the DLL, in result making it undefined.
+   * Removes all nodes from the SLL, in result making it undefined.
    * @returns void.
    * @timecomplexity O(1).
    */
   clear(): void {
-    this.dll = undefined;
+    this.sll = undefined;
   }
 
   /////////////
@@ -391,11 +389,11 @@ class DoublyLinkedList<T> {
   /////////////
 
   /**
-   * Appends values from an array to the DLL.
-   * @returns DoublyLinkedList<T>.
+   * Appends values from an array to the SLL.
+   * @returns SinglyLinkedList<T>.
    * @timecomplexity O(N).
    */
-  fromArray(arr: T[]): DoublyLinkedList<T> {
+  fromArray(arr: T[]): SinglyLinkedList<T> {
     for (const a of arr) {
       this.addBack(a);
     }
@@ -403,4 +401,4 @@ class DoublyLinkedList<T> {
   }
 }
 
-export default DoublyLinkedList;
+export default SinglyLinkedList;
