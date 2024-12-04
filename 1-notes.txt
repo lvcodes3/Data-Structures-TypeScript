@@ -5,12 +5,14 @@ What is an ADT?
     The interface hides the details and complexity of the ds implementation.
 
 
+
 Examples: 
 
     ADT (Interface)                         DS (Implementation)
     List                                    Dynamic Array, Linked List
     Queue / Stack                           Dynamic Array, Linked List
     Map                                     Hash Map, Tree Map
+
 
 
 Arrays:
@@ -42,6 +44,7 @@ Arrays:
         Search                  O(n) looping through n elements to find an element
 
 
+
 Linked Lists:
 
     A linear data structure where the elements are not stored in contiguous memory locations, instead the elements
@@ -65,6 +68,7 @@ Linked Lists:
         Insertion head      O(1)        O(1)
         Insertion middle    O(n)        O(n)
         Insertion tail      O(1)        O(1)
+
 
 
 Stacks:
@@ -97,6 +101,7 @@ Stacks:
         Peek                O(1)
 
 
+
 Queues:
 
     A queue is a linear data structure.
@@ -127,6 +132,7 @@ Queues:
         Peek Front          O(1)
         Peek Back           O(1)
 
+        
 
 Circular Buffer:
 
@@ -144,9 +150,9 @@ Circular Buffer:
 
         Two Indexes:
         
-            readIndex - the element where we should pull the element from (front of the queue)
+            readIndex - the element where we should pull the element from (front of the queue).
 
-            writeIndex - the element where we should add the new element (back of the queue)
+            writeIndex - the element where we should add the new element (back of the queue).
 
         Since the size is fixed, the writeIndex & readIndex goes back to index 0 after the last element index is reached.
 
@@ -157,3 +163,104 @@ Circular Buffer:
         Dequeue             O(1)
         Peek Front          O(1)
         Peek Back           O(1)
+
+
+
+Priority Queue:
+
+    A priority queue is similar to a regular queue. You're enqueueing and dequeueing elements into the queue.
+
+    However, these elements have a specified priority attached to them.
+
+    This priority determines the ordering of the elements.
+
+    Thus, priority queues do not have the FIFI ordering.
+
+    Example: Minimum Priority Queue
+
+        enqueue(99)
+        enqueue(3)
+        enqueue(50)
+        enqueue(-10)
+
+        dequeue() // -10 (normally expect 99 but since this is a min priority queue the lowest value comes first)
+        dequeue() // 3
+        dequeue() // 50
+        dequeue() // 99
+
+    Usage:
+    
+        Dijkstra's shortest path alogorithm.
+
+        Minimum Spanning Tree algorithm.
+
+        Hospitals.
+
+    Implementation (goal to have constant time access and operations):
+
+        Binary Heaps, allows O(logN) insertions and removals.
+
+
+
+Binary Heaps:
+
+    A binary heap is a data structure that implements the Priority Queue ADT.
+
+    It is a Binary tree with two properties:
+
+        1. Structure: The tree must be a complete tree.
+
+            Every row must be completely filled except possibly the last row.
+
+            For the last row, nodes must be inserted as far left as possible.
+
+            Complete trees are balanced, which guarantees logarithmic height.
+
+                                        97
+                                     46    37
+                                   12  3  7  31
+                                  6  9
+
+        2. Order: Nodes must be smaller or greater than their children.
+
+            Min Heap: Parent nodes must be smaller than their children.
+
+                                    10
+                                 15     30
+                              40   50 100  40
+
+            Max Heap: Parent nodes must be greater than their children.
+
+                                    100
+                                 40     50
+                               10  15 50  40
+
+            Note: Left child does not need to be less than the right child. This is not a BST.
+                  Child order doesn't matter. Only parent-child order matters.
+
+    Binary Heap Representation:
+
+        We use arrays to represent heaps. Not nodes and pointers.
+
+        This is because storing nodes and pointers takes more space, resulting in more overhead.
+
+        Example (Min Binary Heap):
+        
+                    1
+                3       8
+            4     10 50     39
+        
+            [1, 3, 8, 4, 10, 50, 39]
+
+            index of the left child = (i * 2) + 1
+            index of the right child = (i * 2) + 2
+            index of the parent = (i - 1) / 2
+
+    Time Complexity:
+
+        Operation                               Binary Heap
+        Enqueue                                 O(logN)
+        Dequeue                                 O(logN)
+        Peek Min / Max                          O(1)
+        Advanced Dequeue (specific element)     O(N) Index Priority Queue (IPQ): O(logN)
+        Contains                                O(N) Index Priority Queue (IPQ): O(1)
