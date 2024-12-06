@@ -79,6 +79,36 @@ class SinglyLinkedList<T> {
   }
 
   /**
+   * Reverses the SLL.
+   * @returns void.
+   * @timecomplexity O(N).
+   */
+  reverse(): void {
+    if (!this._ensureSLL()) return;
+
+    let prevNode: SinglyLinkedListNode<T> | null = null;
+    let currNode: SinglyLinkedListNode<T> | null = this.sll!.head;
+    let nextNode: SinglyLinkedListNode<T> | null;
+
+    while (currNode !== null) {
+      // store the next node //
+      nextNode = currNode.next;
+
+      // reverse the current node's pointer //
+      currNode.next = prevNode;
+
+      // move previous node forward //
+      prevNode = currNode;
+
+      // move current node forward //
+      currNode = nextNode;
+    }
+
+    // set the new head //
+    this.sll!.head = prevNode as SinglyLinkedListNode<T>;
+  }
+
+  /**
    * Displays the SLL in a formatted string.
    * @returns void.
    * @timecomplexity O(N).

@@ -48,6 +48,10 @@ sll.display(); // Expected: 20 -> 30 -> 35 -> 40 -> null
 console.assert(sll.removeAt(2) === 35, "Removed element should be 35.");
 sll.display(); // Expected: 20 -> 30 -> 40 -> null
 
+// reverse //
+sll.reverse();
+sll.display(); // Expected: 40 -> 30 -> 20 -> null
+
 // clear //
 sll.clear();
 sll.display(); // Expected: null
